@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        {% block title %}
+            Django App
+        {% endblock %}
+    </title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <script src="{% static 'js/main.js' %}" defer></script>
+</head>
+<body>
+    <nav>
+        <a href="/">
+            <span role = "img" aria-label="Home" title = "home">🏠</span></a> | 
+        <a href="/about">
+            <span role = "img" aria-label="About" title = "about">😀</span>
+        </a> | 
+        <a href="{%url 'posts:list'%}">
+            <span role = "img" aria-label="Posts" title = "posts">📰</span></a>
+        </a> |
+        <a href="{%url 'users:register'%}">
+            <span role = "img" aria-label="User Registration" title = "Register">🚀</span></a>
+        </a>
+        </a>
+        <a href="{%url 'users:login'%}">
+            <span role = "img" aria-label="User Login" title = "Login">🔐</span></a>
+        </a> |
+        {%if user.is_authenticated%}
+            <a href="{%url 'posts:new-post'%}">
+                <span role = "img" aria-label="New Post" title = "New Post">🆕</span></a>
+            </a> |
+            <form class "logout" action ="{%url 'users:logout'%}" method="post">
+                {% csrf_token %}
+                <button type="logout-button" style="background:none; border:none; padding:0; cursor:pointer; color:blue; text-decoration:underline; font:inherit;">
+                    <span role = "img" aria-label="User Logout" title = "Logout">👋</span>
+                </button>
+        {%else%}
+        <a href="{%url 'users:register'%}">
+            <span role = "img" aria-label="User Registration" title = "Register">🚀</span></a>
+        </a>
+        </a>
+        <a href="{%url 'users:login'%}">
+            <span role = "img" aria-label="User Login" title = "Login">🔐</span></a>
+        </a> 
+        {%endif%}     
+    </nav>
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+</body>
+</html>
